@@ -1,49 +1,51 @@
-﻿using System.Reflection.PortableExecutable;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Reflection;
 
-Console.WriteLine("Введите путь к файлу");
+const string DLL_NAME = "MyLibrary.dll";
+const string TYPE_NAME = "MyLibary.TextHelper";
+const string METHOD_NAME = "GetCountUniqueWords";
+
+Console.WriteLine("Enter the path to the file");
 var pathFile = Console.ReadLine();
-Console.WriteLine("Введите путь к файлу для сохранения данных");
-var pathSaveFile = Console.ReadLine();
 
-if (pathFile != null && pathSaveFile != null)
+try
 {
-    Console.Clear();
-    var dictionaryWords = await GetCountUniqueWordsAsync(pathFile); 
-    await WriteInFileAsync(dictionaryWords, pathSaveFile);
-    Console.WriteLine("Данные загрузили в файл");
+    Assembly assembly = Assembly.LoadFrom(DLL_NAME);
+    var textHelperType = Type.GetType(TYPE_NAME, true, true);
+    var methodInfo = textHelperType?.GetMethod(METHOD_NAME, BindingFlags.NonPublic);
+
+    string text = await GetTextFromFileAsync(null);
+
+    Console.WriteLine("Enter the path to the file to save the data");
+    var pathSaveFile = Console.ReadLine();
+
+    if (pathFile != null && pathSaveFile != null)
+    {
+        Console.Clear();
+        var dictionaryWordsObject = methodInfo?.Invoke(null, new object[] { text });
+        if (dictionaryWordsObject is Dictionary<string, int> dictionaryWords)
+        {
+            await WriteInFileAsync(dictionaryWords, pathSaveFile);
+            Console.WriteLine("The data was uploaded to a file");
+        }
+    }
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.Message);
 }
 Console.ReadKey();
 
-static async Task<Dictionary<string, int>> GetCountUniqueWordsAsync(string pathFile)
+static async Task<string> GetTextFromFileAsync(string? pathFile)
 {
-    List<string> words = new List<string>();
-    Regex regex = new Regex(@"\p{L}+");
-    StreamReader? reader = null;
-
-    try
+    if (pathFile == null)
     {
-        reader = new(pathFile, Encoding.UTF8);
-        string? strLine;
-        while ((strLine = await reader.ReadLineAsync()) != null)
-        {
-            words.AddRange(regex.Matches(strLine).Select(w => w.Value.ToLower()));
-        }
-    }
-    catch (Exception)
-    {
-        await Console.Out.WriteLineAsync("Ошибка чтение файла");
-    }
-    finally
-    {
-        reader?.Close();
+        throw new ArgumentNullException(nameof(pathFile));
     }
 
-    var dictionaryWords = words.GroupBy(m => m).ToDictionary(w => w.Key, c => c.Count())
-        .OrderByDescending(m => m.Value).ToDictionary(m => m.Key, m => m.Value);
-    
-    return dictionaryWords;
+    using (StreamReader reader = new StreamReader(pathFile))
+    {
+        return await reader.ReadToEndAsync();
+    }
 }
 
 static async Task WriteInFileAsync(Dictionary<string, int> words, string pathFile)
