@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using MyLibrary;
+using System.Diagnostics;
+using System.Reflection;
 
 const string DLL_NAME = "MyLibrary.dll";
 const string TYPE_NAME = "MyLibrary.TextHelper";
@@ -23,7 +25,20 @@ try
         if (pathSaveFile != null)
         {
             Console.Clear();
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
             var dictionaryWordsObject = methodInfo.Invoke(null, new object[] { text });
+            stopwatch.Stop();
+            Console.WriteLine($"Method execution time \"{METHOD_NAME}\": {stopwatch.ElapsedMilliseconds} ms");
+
+            var task = new Task<Dictionary<string, int>>(() => TextHelper.GetCountUniqueWordsThread(text));
+            stopwatch.Restart();
+            task.Start();
+            var dictionaryWordsResult = task.Result;
+            stopwatch.Stop();
+            Console.WriteLine($"Method execution time \"{nameof(TextHelper.GetCountUniqueWordsThread)}\": {stopwatch.ElapsedMilliseconds} ms");
+
             if (dictionaryWordsObject is Dictionary<string, int> dictionaryWords)
             {
                 await WriteInFileAsync(dictionaryWords, pathSaveFile);
