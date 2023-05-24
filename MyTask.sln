@@ -5,7 +5,9 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyProgram", "MyProgram\MyProgram.csproj", "{CCAB524B-27E9-42C5-A432-A2CFA4F0EBB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLibrary", "MyLibrary\MyLibrary.csproj", "{29CBBED4-761A-4164-8D9B-39943F491469}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyLibrary", "MyLibrary\MyLibrary.csproj", "{29CBBED4-761A-4164-8D9B-39943F491469}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{ED3FACC8-3338-4FFB-A285-0DBC40F5577B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{29CBBED4-761A-4164-8D9B-39943F491469}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29CBBED4-761A-4164-8D9B-39943F491469}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29CBBED4-761A-4164-8D9B-39943F491469}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED3FACC8-3338-4FFB-A285-0DBC40F5577B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED3FACC8-3338-4FFB-A285-0DBC40F5577B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED3FACC8-3338-4FFB-A285-0DBC40F5577B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED3FACC8-3338-4FFB-A285-0DBC40F5577B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

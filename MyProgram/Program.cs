@@ -1,5 +1,7 @@
 ﻿using MyLibrary;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Http.Json;
 using System.Reflection;
 
 const string DLL_NAME = "MyLibrary.dll";
@@ -38,6 +40,17 @@ try
             var dictionaryWordsResult = task.Result;
             stopwatch.Stop();
             Console.WriteLine($"Method execution time \"{nameof(TextHelper.GetCountUniqueWordsThread)}\": {stopwatch.ElapsedMilliseconds} ms");
+
+            Console.WriteLine("Making API Call");
+            using (var client = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate }))
+            {
+                StringContent content = new StringContent(text);
+                using var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5228/api/getCountUniqueWords");
+                request.Content = content;
+                using var response = await client.SendAsync(request);
+                var result = await response.Content.ReadFromJsonAsync<Dictionary<string, int>>();
+                Console.WriteLine($"Result WebAPI: {result?.GetType()}");
+            }
 
             if (dictionaryWordsObject is Dictionary<string, int> dictionaryWords)
             {
