@@ -34,12 +34,12 @@ try
             stopwatch.Stop();
             Console.WriteLine($"Method execution time \"{METHOD_NAME}\": {stopwatch.ElapsedMilliseconds} ms");
 
-            var task = new Task<Dictionary<string, int>>(() => TextHelper.GetCountUniqueWordsThread(text));
+            var task = new Task<Dictionary<string, int>>(() => TextHelper.GetCountUniqueWordsTask(text));
             stopwatch.Restart();
             task.Start();
             var dictionaryWordsResult = task.Result;
             stopwatch.Stop();
-            Console.WriteLine($"Method execution time \"{nameof(TextHelper.GetCountUniqueWordsThread)}\": {stopwatch.ElapsedMilliseconds} ms");
+            Console.WriteLine($"Method execution time \"{nameof(TextHelper.GetCountUniqueWordsTask)}\": {stopwatch.ElapsedMilliseconds} ms");
 
             Console.WriteLine("Making API Call");
             using (var client = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate }))

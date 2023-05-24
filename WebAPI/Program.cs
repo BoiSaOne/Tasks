@@ -9,7 +9,7 @@ app.MapPost("/api/getCountUniqueWords", async (HttpContext context) =>
 {
     using StreamReader reader = new StreamReader(context.Request.Body);
     string text = await reader.ReadToEndAsync();
-    return TextHelper.GetCountUniqueWordsThread(text);
+    return TextHelper.GetCountUniqueWordsTask(text);
 });
 
 app.MapGet("api", () => "Start WebAPI");

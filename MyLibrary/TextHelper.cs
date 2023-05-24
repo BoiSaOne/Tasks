@@ -18,7 +18,7 @@ namespace MyLibrary
             return dictionaryWords ?? new Dictionary<string, int>();
         }
 
-        public static Dictionary<string, int> GetCountUniqueWordsThread(string text)
+        public static Dictionary<string, int> GetCountUniqueWordsTask(string text)
         {
             Regex regex = new Regex(@"\p{L}+");
             List<string> words = new List<string>();
