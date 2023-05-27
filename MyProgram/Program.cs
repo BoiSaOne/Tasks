@@ -27,19 +27,12 @@ try
         if (pathSaveFile != null)
         {
             Console.Clear();
-            var stopwatch = new Stopwatch();
 
-            stopwatch.Start();
             var dictionaryWordsObject = methodInfo.Invoke(null, new object[] { text });
-            stopwatch.Stop();
-            Console.WriteLine($"Method execution time \"{METHOD_NAME}\": {stopwatch.ElapsedMilliseconds} ms");
-
-            var task = new Task<Dictionary<string, int>>(() => TextHelper.GetCountUniqueWordsTask(text));
-            stopwatch.Restart();
-            task.Start();
-            var dictionaryWordsResult = task.Result;
-            stopwatch.Stop();
-            Console.WriteLine($"Method execution time \"{nameof(TextHelper.GetCountUniqueWordsTask)}\": {stopwatch.ElapsedMilliseconds} ms");
+            TextHelper.GetCountUniqueWordsThread(text);
+            TextHelper.GetCountUniqueWordsTask(text);
+            TextHelper.GetCountUniqueWordsParallel(text);
+            TextHelper.GetCountUniqueWordsThreadPool(text);
 
             Console.WriteLine("Making API Call");
             using (var client = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate }))
