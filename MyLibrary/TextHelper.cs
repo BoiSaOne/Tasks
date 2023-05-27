@@ -23,7 +23,7 @@ namespace MyLibrary
                 .OrderByDescending(m => m.Value).ToDictionary(m => m.Key, m => m.Value);
             
             stopwatch.Stop();
-            Console.WriteLine($"Method execution time \"{nameof(GetCountUniqueWords)}\": {stopwatch.ElapsedMilliseconds} ms");
+            Console.WriteLine($"\"Synchronous\": {stopwatch.ElapsedMilliseconds} ms");
 
             return dictionaryWords ?? new Dictionary<string, int>();
         }
@@ -61,7 +61,7 @@ namespace MyLibrary
                 .OrderByDescending(m => m.Value).ToDictionary(m => m.Key, m => m.Value);
 
             stopwatch.Stop();
-            Console.WriteLine($"Method execution time \"{nameof(GetCountUniqueWordsThread)}\": {stopwatch.ElapsedMilliseconds} ms");
+            Console.WriteLine($"\"Threads\": {stopwatch.ElapsedMilliseconds} ms");
 
             return dictionaryWords ?? new Dictionary<string, int>();
         }
@@ -97,7 +97,7 @@ namespace MyLibrary
                 .OrderByDescending(m => m.Value).ToDictionary(m => m.Key, m => m.Value);
 
             stopwatch.Stop();
-            Console.WriteLine($"Method execution time \"{nameof(GetCountUniqueWordsTask)}\": {stopwatch.ElapsedMilliseconds} ms");
+            Console.WriteLine($"\"Tasks\": {stopwatch.ElapsedMilliseconds} ms");
 
             return dictionaryWords ?? new Dictionary<string, int>();
         }
@@ -126,7 +126,7 @@ namespace MyLibrary
                 .OrderByDescending(m => m.Value).ToDictionary(m => m.Key, m => m.Value);
 
             stopwatch.Stop();
-            Console.WriteLine($"Method execution time \"{nameof(GetCountUniqueWordsParallel)}\": {stopwatch.ElapsedMilliseconds} ms");
+            Console.WriteLine($"\"Parallel\": {stopwatch.ElapsedMilliseconds} ms");
 
             return dictionaryWords ?? new Dictionary<string, int>();
         }
@@ -163,7 +163,7 @@ namespace MyLibrary
                 .OrderByDescending(m => m.Value).ToDictionary(m => m.Key, m => m.Value);
 
             stopwatch.Stop();
-            Console.WriteLine($"Method execution time \"{nameof(GetCountUniqueWordsThreadPool)}\": {stopwatch.ElapsedMilliseconds} ms");
+            Console.WriteLine($"\"ThreadPool\": {stopwatch.ElapsedMilliseconds} ms");
 
             return dictionaryWords ?? new Dictionary<string, int>();
         }
